@@ -113,5 +113,28 @@ xBxS"
 
 코드 실행 과정:
 1. realHash에 12~999 숫자를 저장한다. 이중 다른 자리의 숫자가 중복되는 수들은 제거하면서 저장한다. 
-2. realHash의 크기만큼 reandom을 돌린다.
-3. 뽑은 위치에 있는 
+2. while문으로 들어간다. 3S가 나오면 빠져 나오게끔 설계한다.
+3. realHash의 크기만큼 reandom을 돌린다.
+4. 뽑은 숫자를 자리수 별로 나눠 x, y, z에 저장한다.
+5. 뽑은 숫자와 원하는 숫자를 대조해 ball, strike를 판별한다.
+6. 나온 ball과 strike의 숫자가 아래와 같을때 각각 다른 조건을 설정해준다.
+   - 0B0S : x,y,z 모두 배제시켜야 한다.
+      fori {if (i in {x,y,z}) continue; }
+        forj {if (j in {x,y,z}) continue; }
+           fork {if (k in {x,y,z}) continue;
+                 if (realHash.contain(ijk)) newHash.add(ijk) }
+     realHash의 내용물을 newHash로 바꾸기, newHash비우기
+   - 1B0S : 하나는 맞았으나, 같은 자리가 맞은게 아니고, x,y,z중 두개 이상이 포함될 수는 없다.
+      fori {if (i == x) continue; }
+        forj {if (j == y) continue; }
+           fork {if (k == z) continue;
+                 if (x,y,z가 동시에 두개 미만일때)
+                    if (realHash.contain(ijk)) newHash.add(ijk) }
+   - 0B1S : xjk, iyk, ijz중 하나의 경우, 0B0S와 비슷하게 이중 반복문으로 횟수를 낮춰 세번 반복하면 끝이다.
+   - 1B1S : xzk, xjy, zyk, iyx, yjz, ixz 가 되는 경우만 골라주기
+   - 2B : yxk, yjx, ixy, zjx, izx, zxk, zjy, izy, yzk 가 되는 경우만 골라주기
+   - 2S : xyk, iyz, xjz 가 되는 경우만 골라주기
+   - 2B1S : 두개 골라 위치 변환해서 저장하기 -> 3개 저장
+   - 3B : 앞으로한칸 민거나 뒤로 한칸 민거 저장하기 -> 2개 저장
+   - 3S : 종료!
+7. 출력과 종료료
